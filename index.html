@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>random letter generator</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      @font-face {
+        font-family: 'Poppins';
+        src: url('https://josurzyn.github.io/random-letter-generator/Poppins-Regular.ttf')
+          format('truetype');
+        font-weight: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Poppins-SemiBold';
+        src: url('https://josurzyn.github.io/random-letter-generator//Poppins-SemiBold.ttf')
+          format('truetype');
+        font-weight: 600;
+        font-display: swap;
+      }
+      body {
+        font-family: Poppins;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 5rem;
+        gap: 2rem;
+      }
+      button {
+        padding: 0.5rem 1rem;
+        font-family: Poppins;
+        border-radius: 0.5rem;
+        background-color: transparent;
+        transition: all 200ms ease-in-out;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: gainsboro;
+      }
+      button:disabled {
+        background-color: gainsboro;
+      }
+      #letter {
+        font-family: Poppins-SemiBold;
+        font-size: 3rem;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <button onclick="generateLetterWithAnimation()">get a letter</button>
+      <p id="lead-text">your letter is...</p>
+      <p id="letter">?</p>
+    </main>
+
+    <script>
+      const fullAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+      const teamAlphabet = 'ABCDEFHIJLMNTU'.split('');
+
+      const button = document.querySelector('button');
+      const letter = document.getElementById('letter');
+
+      function generateLetterWithAnimation() {
+        button.disabled = true;
+
+        let iterations = 0;
+        const maxIterations = 20;
+        const animationInterval = 70;
+
+        const interval = setInterval(() => {
+          const randomIndex = Math.floor(Math.random() * fullAlphabet.length);
+          letter.textContent = fullAlphabet[randomIndex];
+
+          iterations++;
+          if (iterations >= maxIterations) {
+            clearInterval(interval);
+
+            const finalLetter =
+              teamAlphabet[Math.floor(Math.random() * teamAlphabet.length)];
+            letter.textContent = finalLetter;
+
+            button.disabled = false;
+          }
+        }, animationInterval);
+      }
+    </script>
+  </body>
+</html>
